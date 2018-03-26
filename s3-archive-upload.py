@@ -77,10 +77,11 @@ if __name__ == "__main__":
     s3 = session.resource("s3")
     show_info("Putting object to s3://" + config["bucket_name"] + "/" + target_basename)
     bucket = s3.Bucket(config["bucket_name"])
-    result = bucket.put_object(Key=target_basename, Body=open(args.TARGET, "rb"))
+    transfer_config = boto3.s3.transfer.TransferConfig(multipart_threshold=1 * 1024 ** 3) # 1GB
+    bucket.upload_file(args.TARGET, target_basename, Config=transfer_config)
     show_info("Upload Finished")
 
     target_md5_checksum = calculate_md5_checksum(args.TARGET)
     show_info("Check Sum " + target_md5_checksum + " (" + target_basename + ")")
-    md5_checksum = result.e_tag.split("-")[0]
+    md5_checksum = s3.Object(config["bucket_name"], target_basename).e_tag.split("-")[0]
     show_info("Check Sum " + target_md5_checksum + " (Remote:" + target_basename + ")")
