@@ -1,0 +1,5 @@
+{
+  "AWS_ACCESS_KEY_ID": "********************",
+  "AWS_SECRET_ACCESS_KEY": "***************************************",
+  "bucket_name": "example-bucket-name-of-s3"
+}
