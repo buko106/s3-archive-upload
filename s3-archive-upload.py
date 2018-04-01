@@ -16,8 +16,9 @@ def create_parser():
     _parser.add_argument("TARGET", type=str)
     _parser.add_argument("--config", type=str,
                          default="./config.json",
-                         help="specifying config json file.(See config.sample.json)"
-                         )
+                         help="specifying config json file.(See config.sample.json)")
+    _parser.add_argument("--storage-class", type=str, default="STANDARD", 
+                         choices=("STANDARD", "REDUCED_REDUNDANCY", "STANDARD_IA"))
     return _parser
 
 
